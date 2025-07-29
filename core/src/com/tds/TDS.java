@@ -66,22 +66,25 @@ public class TDS extends ApplicationAdapter {
         int wallWidth = 50;
         int worldHeight = Gdx.graphics.getHeight();
         int worldWidth = Gdx.graphics.getWidth();
-        //Bottem Wall
+        // Bottom wall
         Wall temp = new Wall();
         temp.setSize(worldWidth - gap, wallWidth);
-        temp.setPosition(gap/2, 0);
+        temp.setPosition(gap / 2, 0);
         walls[0] = temp;
+        // Top wall
         temp = new Wall();
         temp.setSize(worldWidth - gap, wallWidth);
-        temp.setPosition(gap/2, worldHeight - wallWidth);
+        temp.setPosition(gap / 2, worldHeight - wallWidth);
         walls[1] = temp;
+        // Left wall
         temp = new Wall();
         temp.setSize(wallWidth, worldHeight - gap);
-        temp.setPosition(0, gap/2);
+        temp.setPosition(0, gap / 2);
         walls[2] = temp;
+        // Right wall
         temp = new Wall();
         temp.setSize(wallWidth, worldHeight - gap);
-        temp.setPosition(worldWidth - wallWidth, gap/2);
+        temp.setPosition(worldWidth - wallWidth, gap / 2);
         walls[3] = temp;
     }
 
