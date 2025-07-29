@@ -1,11 +1,28 @@
 # Codex Agent Instructions
 
-This project uses the Gradle build system but does not contain unit tests. If you need to build the project, run:
+This repository is a small LibGDX project split into `core` and `desktop` modules.
+The build scripts predate Gradle 4 and rely on the deprecated `compile` configuration,
+so they fail on recent Gradle releases. There are no unit tests.
+
+## Building
+Use a system-installed Gradle and run:
 
 ```
 gradle build
 ```
 
-The `gradlew` wrapper script is outdated and not executable, so rely on the system `gradle`.
+With Gradle 8+ this will fail with `Could not find method compile()`.
+If you have access to an older Gradle (around 3.x), the build may succeed.
+The bundled `gradlew` script is not executable and also references an outdated
+wrapper version, so prefer the system `gradle`.
 
-No automated tests exist, so the build step may fail on older Gradle scripts. If it does, note the failure and proceed.
+## Running
+The desktop application can be started with:
+
+```
+gradle desktop:run
+```
+
+This will also fail under modern Gradle for the same reason as `build`.
+
+In short, expect build commands to fail unless using an older Gradle.
