@@ -1,7 +1,12 @@
 apply plugin: "java"
 
-sourceCompatibility = 1.6
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 sourceSets.main.java.srcDirs = [ "src/" ]
+
+repositories {
+    mavenCentral()
+}
 
 project.ext.mainClassName = "com.tds.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../core/assets");
@@ -15,9 +20,8 @@ task run(dependsOn: classes, type: JavaExec) {
 }
 
 task dist(type: Jar) {
-    from files(sourceSets.main.output.classesDir)
-    from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
+    from sourceSets.main.output
+    from { configurations.runtimeClasspath.collect { zipTree(it) } }
     from files(project.assetsDir);
  
     manifest {
