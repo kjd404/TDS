@@ -47,8 +47,8 @@ public class Virus extends Entity{
         double angle = Math.atan2(-dirX, dirY);
         float x, y;
         
-        x = (float)Math.cos(angle + 90f) * getSpeed() * Gdx.graphics.getDeltaTime();
-        y = (float)Math.sin(angle + 90f) * getSpeed() * Gdx.graphics.getDeltaTime();
+        x = (float)Math.cos(angle + Math.PI / 2) * getSpeed() * Gdx.graphics.getDeltaTime();
+        y = (float)Math.sin(angle + Math.PI / 2) * getSpeed() * Gdx.graphics.getDeltaTime();
         this.translate(x, y);
     }
     
