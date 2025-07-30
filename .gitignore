@@ -17,33 +17,19 @@ gwt-unitCache/
 www-test/
 .gwt-tmp/
 
-## Android Studio and Intellij and Android in general
+## Android
 android/libs/armeabi/
 android/libs/armeabi-v7a/
 android/libs/x86/
 android/gen/
-.idea/
-*.ipr
-*.iws
-*.iml
 out/
 com_crashlytics_export_strings.xml
 
-## Eclipse
-.classpath
-.project
-.metadata
 **/bin/
 tmp/
 *.tmp
 *.bak
 *.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.externalToolBuilders/
-*.launch
 
 ## NetBeans
 **/nbproject/private/
@@ -63,3 +49,4 @@ build/
 
 ## OS Specific
 .DS_Store
+gradle/wrapper/gradle-wrapper.jar
