@@ -8,8 +8,6 @@ buildscript {
 }
 
 allprojects {
-    apply plugin: "eclipse"
-    apply plugin: "idea"
 
     version = '1.0'
     ext {
@@ -49,8 +47,4 @@ project(":core") {
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         testImplementation "junit:junit:4.13.2"
     }
-}
-
-tasks.eclipse.doLast {
-    delete ".project"
 }
