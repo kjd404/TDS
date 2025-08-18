@@ -16,7 +16,7 @@ import com.tds.HUD;
 import com.tds.TDS;
 import com.tds.Virus;
 import com.tds.Wall;
-import com.tds.input.InputHandler;
+import com.tds.input.InputService;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -36,9 +36,11 @@ public class GameScreen extends ScreenAdapter {
     private final OrthographicCamera camera;
     private final Viewport viewport;
     private final RenderStrategy renderStrategy;
+    private final InputService input;
 
-    public GameScreen(TDS game) {
+    public GameScreen(TDS game, InputService input) {
         this.game = game;
+        this.input = input;
 
         float worldWidth = Gdx.graphics.getWidth();
         float worldHeight = Gdx.graphics.getHeight();
@@ -56,7 +58,7 @@ public class GameScreen extends ScreenAdapter {
         virusTexture = game.assetManager.get("virus.png", Texture.class);
 
         AnimationSet animations = AnimationSetFactory.load(game.assetManager, "playerModel.json");
-        admin = new Admin(1, 3, 1, 300, animations);
+        admin = new Admin(1, 3, 1, 300, animations, input);
         float posx = viewport.getWorldWidth()/2 - admin.getWidth()/2;
         float posy = viewport.getWorldHeight()/2 - admin.getHeight()/2;
         admin.setPosition(posx, posy);
@@ -71,7 +73,7 @@ public class GameScreen extends ScreenAdapter {
         walls = new Wall[4];
 
         // Direct all input events to the centralized input handler
-        Gdx.input.setInputProcessor(InputHandler.getInstance());
+        Gdx.input.setInputProcessor(input);
         int gap = 200;
         int wallWidth = 50;
         float worldHeight = viewport.getWorldHeight();
