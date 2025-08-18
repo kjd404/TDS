@@ -3,7 +3,6 @@ package com.tds.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
-import com.badlogic.gdx.backends.headless.mock.graphics.MockGraphics;
 import com.badlogic.gdx.backends.headless.mock.input.MockInput;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.Files;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tds.Admin;
 import com.tds.Virus;
 import com.tds.assets.AnimationSet;
+import com.tds.platform.FakeGraphicsContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,10 +56,6 @@ public class AdminInputServiceTest {
             HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
             new HeadlessApplication(new ApplicationAdapter(){}, config);
         }
-        Gdx.graphics = new MockGraphics() {
-            @Override
-            public float getDeltaTime() { return 1f; }
-        };
         Gdx.input = new MockInput();
         Gdx.files = new TestFiles();
     }
@@ -149,7 +145,9 @@ public class AdminInputServiceTest {
     public void movesLeftWhenActionPressed() {
         StubInputService input = new StubInputService();
         input.pressed.add(Action.MOVE_LEFT);
-        Admin admin = new Admin(1, 3, 1, 10, createAnimations(), input, new DummyTexture());
+        FakeGraphicsContext graphics = new FakeGraphicsContext();
+        graphics.setDeltaTime(1f);
+        Admin admin = new Admin(1, 3, 1, 10, createAnimations(), input, new DummyTexture(), graphics);
         ScreenViewport viewport = new ScreenViewport(new OrthographicCamera());
         viewport.setWorldSize(100, 100);
         viewport.getCamera().position.set(0,0,0);

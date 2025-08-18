@@ -30,3 +30,7 @@ This project contains unit tests. Run them with:
 ```
 ./gradlew test
 ```
+
+## Development
+- Avoid direct calls to `Gdx.graphics`. Use the `GraphicsContext` interface and inject implementations where needed.
+- Tests that require graphics timing or sizing should prefer `FakeGraphicsContext` from the `core/test` package.

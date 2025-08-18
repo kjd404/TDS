@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tds.input.InputService;
 import com.tds.input.InputService.Action;
 import com.tds.assets.AnimationSet;
+import com.tds.platform.GraphicsContext;
 import java.util.ArrayList;
 
 /**
@@ -30,16 +31,18 @@ public class Admin extends Entity{
     float stateTime = 0;
     float oldX, oldY;
 
+    private final GraphicsContext graphics;
+
     private final AnimationSet animations;
     private final InputService input;
 
     public Admin(float strength, int lives, float health, float speed,
-            AnimationSet animations, InputService input) {
-        this(strength, lives, health, speed, animations, input, new Texture("Bullet.png"));
+            AnimationSet animations, InputService input, GraphicsContext graphics) {
+        this(strength, lives, health, speed, animations, input, new Texture("Bullet.png"), graphics);
     }
 
     public Admin(float strength, int lives, float health, float speed,
-            AnimationSet animations, InputService input, Texture bulletTexture) {
+            AnimationSet animations, InputService input, Texture bulletTexture, GraphicsContext graphics) {
         super(health, speed,
                 animations.getDown().getKeyFrame(0).getTexture(),
                 animations.getDown().getKeyFrame(0).getRegionX(),
@@ -52,8 +55,9 @@ public class Admin extends Entity{
 
         this.lives = lives;
         this.animations = animations;
-        bullets = new ParticleSystem(bulletTexture);
+        bullets = new ParticleSystem(bulletTexture, graphics);
         this.input = input;
+        this.graphics = graphics;
     }
 
     
@@ -76,19 +80,19 @@ public class Admin extends Entity{
         boolean keyPressed = false;
         if(input.isActionPressed(Action.MOVE_LEFT)){
             keyPressed = true;
-            this.setX(this.getX() - Gdx.graphics.getDeltaTime() * getSpeed());
+            this.setX(this.getX() - graphics.getDeltaTime() * getSpeed());
         }
         if(input.isActionPressed(Action.MOVE_RIGHT)) {
             keyPressed = true;
-            this.setX(this.getX() + Gdx.graphics.getDeltaTime() * getSpeed());
+            this.setX(this.getX() + graphics.getDeltaTime() * getSpeed());
         }
         if(input.isActionPressed(Action.MOVE_UP)) {
             keyPressed = true;
-            this.setY(this.getY() + Gdx.graphics.getDeltaTime() * getSpeed());
+            this.setY(this.getY() + graphics.getDeltaTime() * getSpeed());
         }
         if(input.isActionPressed(Action.MOVE_DOWN)) {
             keyPressed = true;
-            this.setY(this.getY() - Gdx.graphics.getDeltaTime() * getSpeed());
+            this.setY(this.getY() - graphics.getDeltaTime() * getSpeed());
         }
 
         float dirX =  mouseX - getX() - getWidth()/2;
@@ -100,7 +104,7 @@ public class Admin extends Entity{
         this.boundingCircle.setPosition(this.getX(), this.getY());
 
         if(keyPressed) {
-            stateTime += Gdx.graphics.getDeltaTime();
+            stateTime += graphics.getDeltaTime();
         } else {
             stateTime = 0;
         }
