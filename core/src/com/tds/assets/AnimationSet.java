@@ -12,10 +12,11 @@ public class AnimationSet {
     private final Animation<TextureRegion> left;
     private final Animation<TextureRegion> right;
 
-    public AnimationSet(Animation<TextureRegion> up,
-                        Animation<TextureRegion> down,
-                        Animation<TextureRegion> left,
-                        Animation<TextureRegion> right) {
+    public AnimationSet(
+            Animation<TextureRegion> up,
+            Animation<TextureRegion> down,
+            Animation<TextureRegion> left,
+            Animation<TextureRegion> right) {
         this.up = up;
         this.down = down;
         this.left = left;

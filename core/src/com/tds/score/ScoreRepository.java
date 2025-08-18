@@ -25,4 +25,3 @@ public interface ScoreRepository {
      */
     void reset();
 }
-

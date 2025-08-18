@@ -1,20 +1,45 @@
 package com.tds.weapons;
 
-import com.tds.platform.FakeGraphicsContext;
-import com.tds.Virus;
-import org.junit.Test;
 import static org.junit.Assert.*;
+
+import com.tds.Virus;
+import com.tds.platform.FakeGraphicsContext;
 import java.util.ArrayList;
+import org.junit.Test;
 
 public class ProjectileSystemTest {
     private static class DummyTexture extends com.badlogic.gdx.graphics.Texture {
-        public DummyTexture() { super(); }
-        @Override public int getWidth() { return 1; }
-        @Override public int getHeight() { return 1; }
-        @Override public int getDepth() { return 0; }
-        @Override public com.badlogic.gdx.graphics.TextureData getTextureData() { return null; }
-        @Override public boolean isManaged() { return false; }
-        @Override protected void reload() { }
+        public DummyTexture() {
+            super();
+        }
+
+        @Override
+        public int getWidth() {
+            return 1;
+        }
+
+        @Override
+        public int getHeight() {
+            return 1;
+        }
+
+        @Override
+        public int getDepth() {
+            return 0;
+        }
+
+        @Override
+        public com.badlogic.gdx.graphics.TextureData getTextureData() {
+            return null;
+        }
+
+        @Override
+        public boolean isManaged() {
+            return false;
+        }
+
+        @Override
+        protected void reload() {}
     }
 
     @Test

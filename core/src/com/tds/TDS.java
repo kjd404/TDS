@@ -10,7 +10,6 @@ import com.tds.screen.DefaultScreenFactory;
 import com.tds.screen.MenuScreen;
 import com.tds.screen.RenderStrategy;
 import com.tds.screen.ScreenFactory;
-
 import java.util.function.Supplier;
 
 /**
@@ -30,8 +29,7 @@ public class TDS extends Game {
             AssetManager assetManager,
             InputService inputService,
             ScoreRepository scoreRepository,
-            RenderStrategy renderStrategy
-    ) {
+            RenderStrategy renderStrategy) {
         this.batchSupplier = batchSupplier;
         this.assetManager = assetManager;
         this.inputService = inputService;
@@ -96,4 +94,3 @@ public class TDS extends Game {
         highScore = 0;
     }
 }
-

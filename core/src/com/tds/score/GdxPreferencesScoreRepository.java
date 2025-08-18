@@ -37,4 +37,3 @@ public class GdxPreferencesScoreRepository implements ScoreRepository {
         prefs.flush();
     }
 }
-

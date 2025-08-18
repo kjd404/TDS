@@ -41,4 +41,3 @@ public class OrthographicRenderStrategy implements RenderStrategy {
         viewport.update(width, height);
     }
 }
-

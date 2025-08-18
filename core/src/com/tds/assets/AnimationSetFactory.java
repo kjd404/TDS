@@ -17,8 +17,7 @@ import com.badlogic.gdx.utils.JsonValue;
  * {@code frameDuration} field.</p>
  */
 public final class AnimationSetFactory {
-    private AnimationSetFactory() {
-    }
+    private AnimationSetFactory() {}
 
     public static AnimationSet load(AssetManager manager, String configPath) {
         JsonValue root = new JsonReader().parse(Gdx.files.internal(configPath));
@@ -32,8 +31,8 @@ public final class AnimationSetFactory {
         return new AnimationSet(up, down, left, right);
     }
 
-    private static Animation<TextureRegion> buildAnimation(AssetManager manager, JsonValue array,
-                                                           float frameDuration, boolean flipX) {
+    private static Animation<TextureRegion> buildAnimation(
+            AssetManager manager, JsonValue array, float frameDuration, boolean flipX) {
         Array<TextureRegion> regions = new Array<>();
         if (array != null) {
             for (JsonValue v : array) {

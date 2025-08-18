@@ -1,20 +1,20 @@
 package com.tds.screen;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.backends.headless.mock.input.MockInput;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.assets.AssetManager;
-import com.tds.screen.RenderStrategy;
-import com.tds.screen.OrthographicRenderStrategy;
-import static org.mockito.Mockito.*;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tds.TDS;
 import com.tds.input.InputHandler;
 import com.tds.input.InputService;
@@ -22,23 +22,38 @@ import com.tds.score.ScoreRepository;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class MenuScreenTest {
 
     private static class StubScoreRepository implements ScoreRepository {
         private int high;
-        @Override public int getHighScore() { return high; }
-        @Override public void submitScore(int score) { high = Math.max(high, score); }
-        @Override public void reset() { high = 0; }
+
+        @Override
+        public int getHighScore() {
+            return high;
+        }
+
+        @Override
+        public void submitScore(int score) {
+            high = Math.max(high, score);
+        }
+
+        @Override
+        public void reset() {
+            high = 0;
+        }
     }
 
     private static class StubGame extends TDS {
         Screen lastScreen;
+
         StubGame(InputService input, ScoreRepository repo) {
             super(() -> mock(SpriteBatch.class), mock(AssetManager.class), input, repo, mock(RenderStrategy.class));
         }
-        @Override public void setScreen(Screen screen) { lastScreen = screen; }
+
+        @Override
+        public void setScreen(Screen screen) {
+            lastScreen = screen;
+        }
     }
 
     private static class FakeFactory implements ScreenFactory {
@@ -46,10 +61,12 @@ public class MenuScreenTest {
         GameScreen produced;
         private final TDS game;
         private final InputService input;
+
         FakeFactory(TDS game, InputService input) {
             this.game = game;
             this.input = input;
         }
+
         @Override
         public GameScreen createGameScreen() {
             called = true;
@@ -66,28 +83,66 @@ public class MenuScreenTest {
     }
 
     private static class TestFiles implements Files {
-        @Override public FileHandle getFileHandle(String fileName, FileType type) { return new FileHandle(fileName); }
-        @Override public FileHandle classpath(String path) { return new FileHandle(path); }
-        @Override public FileHandle internal(String path) { return new FileHandle("core/assets/" + path); }
-        @Override public FileHandle external(String path) { return new FileHandle(path); }
-        @Override public FileHandle absolute(String path) { return new FileHandle(path); }
-        @Override public FileHandle local(String path) { return new FileHandle(path); }
-        @Override public String getExternalStoragePath() { return ""; }
-        @Override public boolean isExternalStorageAvailable() { return false; }
-        @Override public String getLocalStoragePath() { return ""; }
-        @Override public boolean isLocalStorageAvailable() { return true; }
+        @Override
+        public FileHandle getFileHandle(String fileName, FileType type) {
+            return new FileHandle(fileName);
+        }
+
+        @Override
+        public FileHandle classpath(String path) {
+            return new FileHandle(path);
+        }
+
+        @Override
+        public FileHandle internal(String path) {
+            return new FileHandle("core/assets/" + path);
+        }
+
+        @Override
+        public FileHandle external(String path) {
+            return new FileHandle(path);
+        }
+
+        @Override
+        public FileHandle absolute(String path) {
+            return new FileHandle(path);
+        }
+
+        @Override
+        public FileHandle local(String path) {
+            return new FileHandle(path);
+        }
+
+        @Override
+        public String getExternalStoragePath() {
+            return "";
+        }
+
+        @Override
+        public boolean isExternalStorageAvailable() {
+            return false;
+        }
+
+        @Override
+        public String getLocalStoragePath() {
+            return "";
+        }
+
+        @Override
+        public boolean isLocalStorageAvailable() {
+            return true;
+        }
     }
 
     @Before
     public void setup() {
         if (Gdx.app == null) {
             HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
-            new HeadlessApplication(new ApplicationAdapter(){}, config);
+            new HeadlessApplication(new ApplicationAdapter() {}, config);
         }
         Gdx.files = new TestFiles();
         GL20 gl = (GL20) java.lang.reflect.Proxy.newProxyInstance(
-                GL20.class.getClassLoader(), new Class[]{GL20.class},
-                (proxy, method, args) -> {
+                GL20.class.getClassLoader(), new Class[] {GL20.class}, (proxy, method, args) -> {
                     Class<?> r = method.getReturnType();
                     if (r.equals(Boolean.TYPE)) return false;
                     if (r.equals(Integer.TYPE)) return 0;
@@ -103,11 +158,13 @@ public class MenuScreenTest {
     private static class TestableMenuScreen extends MenuScreen {
         private final TDS g;
         private final ScreenFactory f;
+
         TestableMenuScreen(TDS g, InputService i, ScreenFactory f) {
             super(g, i, f);
             this.g = g;
             this.f = f;
         }
+
         @Override
         public void render(float delta) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {

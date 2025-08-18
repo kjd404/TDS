@@ -6,14 +6,14 @@
 package com.tds;
 
 import com.badlogic.gdx.graphics.Texture;
-import java.util.Random;
 import com.tds.platform.GraphicsContext;
+import java.util.Random;
 
 /**
  *
  * @author mattb
  */
-public class Virus extends Entity{
+public class Virus extends Entity {
 
     boolean alive;
     private final GraphicsContext graphics;
@@ -21,47 +21,46 @@ public class Virus extends Entity{
     public Virus(Texture texture, int level, GraphicsContext graphics) {
         super(1, 200, texture, 0, 0, 128, 128);
         Random rand = new Random();
-        speed = 200 + level*20 + (rand.nextInt()%60 - 30);
+        speed = 200 + level * 20 + (rand.nextInt() % 60 - 30);
         setScale(1f);
-        setHealth((int)Math.log10(level) + 1);
+        setHealth((int) Math.log10(level) + 1);
 
         this.graphics = graphics;
 
         alive = true;
-        //setX(100);
-        //setY(100);        
+        // setX(100);
+        // setY(100);
     }
-    
-    public Virus(Texture texture, float speed, int startx, int starty, GraphicsContext graphics ) {
+
+    public Virus(Texture texture, float speed, int startx, int starty, GraphicsContext graphics) {
         super(1, speed, texture, 0, 0, 32, 32);
         setX(startx);
         setY(starty);
         alive = true;
         this.graphics = graphics;
     }
-    
+
     /**
      * @author KeisterBun
      * @param adminX
-     * @param adminY 
+     * @param adminY
      */
-    public void move(float adminX, float adminY){
-        float dirX =  adminX - getX()-getWidth()/2;
-        float dirY =  adminY - getY()-getHeight()/2;
+    public void move(float adminX, float adminY) {
+        float dirX = adminX - getX() - getWidth() / 2;
+        float dirY = adminY - getY() - getHeight() / 2;
         double angle = Math.atan2(-dirX, dirY);
         float x, y;
-        
-        x = (float)Math.cos(angle + Math.PI / 2) * getSpeed() * graphics.getDeltaTime();
-        y = (float)Math.sin(angle + Math.PI / 2) * getSpeed() * graphics.getDeltaTime();
+
+        x = (float) Math.cos(angle + Math.PI / 2) * getSpeed() * graphics.getDeltaTime();
+        y = (float) Math.sin(angle + Math.PI / 2) * getSpeed() * graphics.getDeltaTime();
         this.translate(x, y);
     }
-    
+
     public void setStatus(boolean status) {
         alive = status;
     }
-    
+
     public boolean getStatus() {
         return alive;
     }
-    
 }

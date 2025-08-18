@@ -10,18 +10,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tds.Admin;
-import com.tds.assets.AnimationSet;
-import com.tds.assets.AnimationSetFactory;
 import com.tds.HUD;
 import com.tds.TDS;
 import com.tds.Virus;
 import com.tds.Wall;
+import com.tds.assets.AnimationSet;
+import com.tds.assets.AnimationSetFactory;
 import com.tds.input.InputService;
-import com.tds.platform.GraphicsContext;
 import com.tds.platform.GdxGraphicsContext;
+import com.tds.platform.GraphicsContext;
 import com.tds.weapons.ParticleSystem;
 import com.tds.weapons.ParticleSystemFactory;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -65,8 +64,8 @@ public class GameScreen extends ScreenAdapter {
         ParticleSystemFactory psFactory = new ParticleSystemFactory(graphics);
         ParticleSystem bullets = psFactory.create(bulletTexture);
         admin = new Admin(1, 3, 1, 300, animations, input, bullets, graphics);
-        float posx = viewport.getWorldWidth()/2 - admin.getWidth()/2;
-        float posy = viewport.getWorldHeight()/2 - admin.getHeight()/2;
+        float posx = viewport.getWorldWidth() / 2 - admin.getWidth() / 2;
+        float posy = viewport.getWorldHeight() / 2 - admin.getHeight() / 2;
         admin.setPosition(posx, posy);
 
         virusList = new ArrayList<Virus>();
@@ -108,27 +107,25 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(.1f, .1f, .1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
         hud.setCurrentLives(admin.getLives());
 
-        for(Wall wall : walls){
+        for (Wall wall : walls) {
             admin.wallCollison(wall);
         }
 
         renderStrategy.apply(game.batch);
         game.batch.begin();
         game.batch.draw(background, 0, 0);
-        for(Virus v : virusList){
-            v.move(admin.getX() + admin.getWidth()/2,
-                    admin.getY() + admin.getHeight()/2);
-            if( admin.getBoundingRectangle().overlaps(v.getBoundingRectangle()) ) {
+        for (Virus v : virusList) {
+            v.move(admin.getX() + admin.getWidth() / 2, admin.getY() + admin.getHeight() / 2);
+            if (admin.getBoundingRectangle().overlaps(v.getBoundingRectangle())) {
                 v.setStatus(false);
-                admin.setPosition(viewport.getWorldWidth()/2,
-                        viewport.getWorldHeight()/2);
-                admin.setLives(admin.getLives()-1);
-                if( admin.getLives() <= 0 ){
+                admin.setPosition(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2);
+                admin.setLives(admin.getLives() - 1);
+                if (admin.getLives() <= 0) {
                     Gdx.app.exit();
                 }
             }
@@ -137,21 +134,21 @@ public class GameScreen extends ScreenAdapter {
         admin.draw(game.batch);
         admin.drawBullets(game.batch);
 
-        for(Virus v : virusList) {
+        for (Virus v : virusList) {
             v.draw(game.batch);
         }
 
         hud.drawHud(game.batch, pen);
 
         game.batch.end();
-        for(int i = virusList.size() - 1; i >= 0; i-- ) {
-            if(virusList.get(i).getStatus() != true) {
+        for (int i = virusList.size() - 1; i >= 0; i--) {
+            if (virusList.get(i).getStatus() != true) {
                 hud.setTotalScore(hud.getTotalScore() + 1);
                 virusList.remove(virusList.get(i));
             }
         }
 
-        if(virusList.size() == 0){
+        if (virusList.size() == 0) {
             game.submitScore(hud.getTotalScore());
             hud.setHighScore(game.getHighScore());
             level += 1;
@@ -165,18 +162,18 @@ public class GameScreen extends ScreenAdapter {
         renderStrategy.resize(width, height);
     }
 
-    void generateLevel(int levelNumber){
-        int numberVirus = levelNumber*2 + levelNumber;
-        for(int i = 0; i < numberVirus; i++) {
+    void generateLevel(int levelNumber) {
+        int numberVirus = levelNumber * 2 + levelNumber;
+        for (int i = 0; i < numberVirus; i++) {
             v1 = new Virus(virusTexture, levelNumber, graphics);
             virusList.add(v1);
         }
         Random rand = new Random();
         float worldHeight = viewport.getWorldHeight();
         float worldWidth = viewport.getWorldWidth();
-        for(Virus v : virusList){
+        for (Virus v : virusList) {
             int pos = rand.nextInt() % 4;
-            switch(pos){
+            switch (pos) {
                 case 0:
                     v.setPosition(40, 40);
                     break;
@@ -187,12 +184,10 @@ public class GameScreen extends ScreenAdapter {
                     v.setPosition(worldWidth - 40, 40);
                     break;
                 case 3:
-                    v.setPosition(worldWidth - 40,
-                        worldHeight -40);
+                    v.setPosition(worldWidth - 40, worldHeight - 40);
                     break;
                 default:
-                    v.setPosition(worldWidth - 40,
-                        worldHeight -40);
+                    v.setPosition(worldWidth - 40, worldHeight - 40);
                     break;
             }
         }

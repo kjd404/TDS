@@ -1,19 +1,19 @@
 package com.tds;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tds.input.InputService;
 import com.tds.score.ScoreRepository;
 import com.tds.screen.RenderStrategy;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Integration-style test verifying that {@link GameBootstrap} wires dependencies into {@link TDS}.

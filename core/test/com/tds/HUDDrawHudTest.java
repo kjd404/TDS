@@ -1,25 +1,27 @@
 package com.tds;
 
-import com.badlogic.gdx.backends.headless.HeadlessApplication;
-import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import static org.junit.Assert.*;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tds.platform.FakeGraphicsContext;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class HUDDrawHudTest {
     private static class RecordingFont extends BitmapFont {
         final java.util.List<Float> ys = new java.util.ArrayList<>();
+
         RecordingFont() {
             super(new BitmapFontData(), new TextureRegion(new DummyTexture()), false);
         }
+
         @Override
         public com.badlogic.gdx.graphics.g2d.GlyphLayout draw(Batch batch, CharSequence str, float x, float y) {
             ys.add(y);
@@ -28,20 +30,44 @@ public class HUDDrawHudTest {
     }
 
     private static class DummyTexture extends com.badlogic.gdx.graphics.Texture {
-        public DummyTexture() { super(); }
-        @Override public int getWidth() { return 1; }
-        @Override public int getHeight() { return 1; }
-        @Override public int getDepth() { return 0; }
-        @Override public com.badlogic.gdx.graphics.TextureData getTextureData() { return null; }
-        @Override public boolean isManaged() { return false; }
-        @Override protected void reload() { }
+        public DummyTexture() {
+            super();
+        }
+
+        @Override
+        public int getWidth() {
+            return 1;
+        }
+
+        @Override
+        public int getHeight() {
+            return 1;
+        }
+
+        @Override
+        public int getDepth() {
+            return 0;
+        }
+
+        @Override
+        public com.badlogic.gdx.graphics.TextureData getTextureData() {
+            return null;
+        }
+
+        @Override
+        public boolean isManaged() {
+            return false;
+        }
+
+        @Override
+        protected void reload() {}
     }
 
     @Before
     public void setup() {
         if (Gdx.app == null) {
             HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
-            new HeadlessApplication(new ApplicationAdapter(){}, config);
+            new HeadlessApplication(new ApplicationAdapter() {}, config);
         }
     }
 

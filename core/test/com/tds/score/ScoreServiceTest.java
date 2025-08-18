@@ -1,15 +1,15 @@
 package com.tds.score;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tds.TDS;
 import com.tds.GameBootstrap;
+import com.tds.TDS;
 import com.tds.input.InputService;
 import com.tds.screen.RenderStrategy;
-import static org.mockito.Mockito.*;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Tests for score submission and reset behaviour in {@link TDS} using an
@@ -69,4 +69,3 @@ public class ScoreServiceTest {
         assertEquals(0, game.getHighScore());
     }
 }
-

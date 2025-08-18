@@ -33,4 +33,3 @@ public interface RenderStrategy {
      */
     void resize(int width, int height);
 }
-

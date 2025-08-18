@@ -8,7 +8,6 @@ import com.tds.score.GdxPreferencesScoreRepository;
 import com.tds.score.ScoreRepository;
 import com.tds.screen.OrthographicRenderStrategy;
 import com.tds.screen.RenderStrategy;
-
 import java.util.function.Supplier;
 
 /**
@@ -56,12 +55,10 @@ public class GameBootstrap {
      */
     public TDS bootstrap() {
         return new TDS(
-            batchSupplier,
-            assetManagerSupplier.get(),
-            inputServiceSupplier.get(),
-            scoreRepositorySupplier.get(),
-            renderStrategySupplier.get()
-        );
+                batchSupplier,
+                assetManagerSupplier.get(),
+                inputServiceSupplier.get(),
+                scoreRepositorySupplier.get(),
+                renderStrategySupplier.get());
     }
 }
-

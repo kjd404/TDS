@@ -1,8 +1,9 @@
 package com.tds;
 
-import org.junit.Test;
 import static org.junit.Assert.*;
+
 import com.tds.platform.FakeGraphicsContext;
+import org.junit.Test;
 
 public class HUDTest {
     @Test
