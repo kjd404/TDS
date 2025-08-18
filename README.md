@@ -29,6 +29,27 @@ Verify with:
 ./gradlew desktop:run
 ```
 
+## Code Style
+This project uses [pre-commit](https://pre-commit.com/) with [google-java-format](https://github.com/google/google-java-format) to enforce consistent formatting for all Java files.
+
+Install pre-commit (once per machine):
+
+```bash
+pip install pre-commit
+```
+
+Set up the git hook:
+
+```bash
+pre-commit install
+```
+
+Format the entire codebase:
+
+```bash
+pre-commit run --all-files
+```
+
 ## Development
 Game code that needs frame timing or screen dimensions should depend on the `GraphicsContext` interface rather than accessing `Gdx.graphics` directly. The `core` module provides a `GdxGraphicsContext` implementation and tests can use `FakeGraphicsContext` to control values.
 
