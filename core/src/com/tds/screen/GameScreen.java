@@ -5,8 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tds.Admin;
 import com.tds.assets.AnimationSet;
 import com.tds.assets.AnimationSetFactory;
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameScreen extends ScreenAdapter {
+    private static final float WORLD_WIDTH = 800f;
+    private static final float WORLD_HEIGHT = 480f;
+
     private final TDS game;
     private HUD hud;
     private Admin admin;
@@ -31,8 +36,15 @@ public class GameScreen extends ScreenAdapter {
     private int level;
     private Virus v1;
 
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
+    private final RenderStrategy renderStrategy;
+
     public GameScreen(TDS game) {
         this.game = game;
+        renderStrategy = new OrthographicRenderStrategy(WORLD_WIDTH, WORLD_HEIGHT);
+        camera = (OrthographicCamera) renderStrategy.getCamera();
+        viewport = renderStrategy.getViewport();
     }
 
     @Override
@@ -44,8 +56,8 @@ public class GameScreen extends ScreenAdapter {
 
         AnimationSet animations = AnimationSetFactory.load(game.assetManager, "playerModel.json");
         admin = new Admin(1, 3, 1, 300, animations);
-        float posx = Gdx.graphics.getWidth()/2 - admin.getWidth()/2;
-        float posy = Gdx.graphics.getHeight()/2 - admin.getHeight()/2;
+        float posx = viewport.getWorldWidth()/2 - admin.getWidth()/2;
+        float posy = viewport.getWorldHeight()/2 - admin.getHeight()/2;
         admin.setPosition(posx, posy);
         admin.scale(.2f);
 
@@ -62,29 +74,29 @@ public class GameScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(InputHandler.getInstance());
         int gap = 200;
         int wallWidth = 50;
-        int worldHeight = Gdx.graphics.getHeight();
-        int worldWidth = Gdx.graphics.getWidth();
+        float worldHeight = viewport.getWorldHeight();
+        float worldWidth = viewport.getWorldWidth();
         Wall temp = new Wall();
         temp.setSize(worldWidth - gap, wallWidth);
-        temp.setPosition(gap / 2, 0);
+        temp.setPosition(gap / 2f, 0);
         walls[0] = temp;
         temp = new Wall();
         temp.setSize(worldWidth - gap, wallWidth);
-        temp.setPosition(gap / 2, worldHeight - wallWidth);
+        temp.setPosition(gap / 2f, worldHeight - wallWidth);
         walls[1] = temp;
         temp = new Wall();
         temp.setSize(wallWidth, worldHeight - gap);
-        temp.setPosition(0, gap / 2);
+        temp.setPosition(0, gap / 2f);
         walls[2] = temp;
         temp = new Wall();
         temp.setSize(wallWidth, worldHeight - gap);
-        temp.setPosition(worldWidth - wallWidth, gap / 2);
+        temp.setPosition(worldWidth - wallWidth, gap / 2f);
         walls[3] = temp;
     }
 
     @Override
     public void render(float delta) {
-        admin.processMovement(virusList);
+        admin.processMovement(virusList, viewport);
         Gdx.gl.glClearColor(.1f, .1f, .1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -97,6 +109,7 @@ public class GameScreen extends ScreenAdapter {
             admin.wallCollison(wall);
         }
 
+        renderStrategy.apply(game.batch);
         game.batch.begin();
         game.batch.draw(background, 0, 0);
         for(Virus v : virusList){
@@ -104,8 +117,8 @@ public class GameScreen extends ScreenAdapter {
                     admin.getY() + admin.getHeight()/2);
             if( admin.getBoundingRectangle().overlaps(v.getBoundingRectangle()) ) {
                 v.setStatus(false);
-                admin.setPosition(Gdx.graphics.getWidth()/2,
-                        Gdx.graphics.getHeight()/2);
+                admin.setPosition(viewport.getWorldWidth()/2,
+                        viewport.getWorldHeight()/2);
                 admin.setLives(admin.getLives()-1);
                 if( admin.getLives() <= 0 ){
                     Gdx.app.exit();
@@ -139,6 +152,11 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    @Override
+    public void resize(int width, int height) {
+        renderStrategy.resize(width, height);
+    }
+
     void generateLevel(int levelNumber){
         int numberVirus = levelNumber*2 + levelNumber;
         for(int i = 0; i < numberVirus; i++) {
@@ -146,6 +164,8 @@ public class GameScreen extends ScreenAdapter {
             virusList.add(v1);
         }
         Random rand = new Random();
+        float worldHeight = viewport.getWorldHeight();
+        float worldWidth = viewport.getWorldWidth();
         for(Virus v : virusList){
             int pos = rand.nextInt() % 4;
             switch(pos){
@@ -153,18 +173,18 @@ public class GameScreen extends ScreenAdapter {
                     v.setPosition(40, 40);
                     break;
                 case 1:
-                    v.setPosition(40, Gdx.graphics.getHeight() - 40);
+                    v.setPosition(40, worldHeight - 40);
                     break;
                 case 2:
-                    v.setPosition(Gdx.graphics.getWidth() - 40, 40);
+                    v.setPosition(worldWidth - 40, 40);
                     break;
                 case 3:
-                    v.setPosition(Gdx.graphics.getWidth() - 40,
-                        Gdx.graphics.getHeight() -40);
+                    v.setPosition(worldWidth - 40,
+                        worldHeight -40);
                     break;
                 default:
-                    v.setPosition(Gdx.graphics.getWidth() - 40,
-                        Gdx.graphics.getHeight() -40);
+                    v.setPosition(worldWidth - 40,
+                        worldHeight -40);
                     break;
             }
         }

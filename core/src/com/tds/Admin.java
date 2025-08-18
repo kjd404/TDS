@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tds.input.InputHandler;
 import com.tds.input.InputHandler.Action;
 import com.tds.assets.AnimationSet;
@@ -56,12 +58,13 @@ public class Admin extends Entity{
         this.lives = lives;
     }
     
-    public void processMovement(ArrayList<Virus> enemies){
+    public void processMovement(ArrayList<Virus> enemies, Viewport viewport){
         oldX = getX();
         oldY = getY();
         this.setOriginCenter();
-        float mouseX = Gdx.input.getX();
-        float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+        Vector3 mouseWorld = viewport.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        float mouseX = mouseWorld.x;
+        float mouseY = mouseWorld.y;
 
         InputHandler input = InputHandler.getInstance();
         boolean keyPressed = false;
