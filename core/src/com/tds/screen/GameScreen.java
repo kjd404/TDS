@@ -19,6 +19,8 @@ import com.tds.Wall;
 import com.tds.input.InputService;
 import com.tds.platform.GraphicsContext;
 import com.tds.platform.GdxGraphicsContext;
+import com.tds.weapons.ParticleSystem;
+import com.tds.weapons.ParticleSystemFactory;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -62,7 +64,10 @@ public class GameScreen extends ScreenAdapter {
         virusTexture = game.assetManager.get("virus.png", Texture.class);
 
         AnimationSet animations = AnimationSetFactory.load(game.assetManager, "playerModel.json");
-        admin = new Admin(1, 3, 1, 300, animations, input, graphics);
+        Texture bulletTexture = game.assetManager.get("Bullet.png", Texture.class);
+        ParticleSystemFactory psFactory = new ParticleSystemFactory(graphics);
+        ParticleSystem bullets = psFactory.create(bulletTexture);
+        admin = new Admin(1, 3, 1, 300, animations, input, bullets, graphics);
         float posx = viewport.getWorldWidth()/2 - admin.getWidth()/2;
         float posy = viewport.getWorldHeight()/2 - admin.getHeight()/2;
         admin.setPosition(posx, posy);

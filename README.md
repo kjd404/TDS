@@ -32,6 +32,8 @@ Verify with:
 ## Development
 Game code that needs frame timing or screen dimensions should depend on the `GraphicsContext` interface rather than accessing `Gdx.graphics` directly. The `core` module provides a `GdxGraphicsContext` implementation and tests can use `FakeGraphicsContext` to control values.
 
+Textures should be loaded through LibGDX's `AssetManager` instead of instantiating `Texture` directly. Projectile and bullet logic is implemented via the `ParticleSystem` interface, with instances created through `ParticleSystemFactory`.
+
 ## macOS notes
 - Ensure the Gradle wrapper is executable:
 

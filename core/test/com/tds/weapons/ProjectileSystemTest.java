@@ -1,11 +1,12 @@
-package com.tds;
+package com.tds.weapons;
 
 import com.tds.platform.FakeGraphicsContext;
+import com.tds.Virus;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
-public class ParticleSystemTest {
+public class ProjectileSystemTest {
     private static class DummyTexture extends com.badlogic.gdx.graphics.Texture {
         public DummyTexture() { super(); }
         @Override public int getWidth() { return 1; }
@@ -20,7 +21,7 @@ public class ParticleSystemTest {
     public void removesParticlesWhenLifeExpires() {
         FakeGraphicsContext graphics = new FakeGraphicsContext();
         graphics.setDeltaTime(1f);
-        ParticleSystem system = new ParticleSystem(new DummyTexture(), graphics);
+        ProjectileSystem system = new ProjectileSystem(new DummyTexture(), graphics);
         system.process(new ArrayList<Virus>());
         system.shoot(1f, 0.5f, 0f, 0f, 0f, 0f);
         assertEquals(1, system.particles.size());

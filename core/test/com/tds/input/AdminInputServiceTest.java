@@ -16,6 +16,7 @@ import com.tds.Admin;
 import com.tds.Virus;
 import com.tds.assets.AnimationSet;
 import com.tds.platform.FakeGraphicsContext;
+import com.tds.weapons.ParticleSystem;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -89,6 +90,12 @@ public class AdminInputServiceTest {
         protected void reload() { }
     }
 
+    private static class NoopParticleSystem implements ParticleSystem {
+        @Override public void shoot(float secondsOfLife, float fireRate, float angle, float x, float y, float speed) {}
+        @Override public void process(java.util.ArrayList<Virus> enemies) {}
+        @Override public void draw(com.badlogic.gdx.graphics.g2d.SpriteBatch batch) {}
+    }
+
     private static class TestFiles implements Files {
         @Override
         public FileHandle getFileHandle(String fileName, FileType type) {
@@ -147,7 +154,7 @@ public class AdminInputServiceTest {
         input.pressed.add(Action.MOVE_LEFT);
         FakeGraphicsContext graphics = new FakeGraphicsContext();
         graphics.setDeltaTime(1f);
-        Admin admin = new Admin(1, 3, 1, 10, createAnimations(), input, new DummyTexture(), graphics);
+        Admin admin = new Admin(1, 3, 1, 10, createAnimations(), input, new NoopParticleSystem(), graphics);
         ScreenViewport viewport = new ScreenViewport(new OrthographicCamera());
         viewport.setWorldSize(100, 100);
         viewport.getCamera().position.set(0,0,0);
