@@ -30,7 +30,10 @@ Verify with:
 ```
 
 ## Code Style
-This project uses [pre-commit](https://pre-commit.com/) with [google-java-format](https://github.com/google/google-java-format) to enforce consistent formatting for all Java files.
+This project uses [pre-commit](https://pre-commit.com/) with
+[Spotless](https://github.com/diffplug/spotless) to automatically format Java
+sources.
+
 
 Install pre-commit (once per machine):
 
@@ -49,6 +52,9 @@ Format the entire codebase:
 ```bash
 pre-commit run --all-files
 ```
+
+The hook runs `./gradlew spotlessApply`, which relies on
+[palantir-java-format](https://github.com/palantir/palantir-java-format).
 
 ## Development
 Game code that needs frame timing or screen dimensions should depend on the `GraphicsContext` interface rather than accessing `Gdx.graphics` directly. The `core` module provides a `GdxGraphicsContext` implementation and tests can use `FakeGraphicsContext` to control values.
