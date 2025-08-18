@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.tds.Admin;
+import com.tds.assets.AnimationSet;
+import com.tds.assets.AnimationSetFactory;
 import com.tds.HUD;
 import com.tds.TDS;
 import com.tds.Virus;
@@ -40,7 +42,8 @@ public class GameScreen extends ScreenAdapter {
         background = game.assetManager.get("background.png", Texture.class);
         virusTexture = game.assetManager.get("virus.png", Texture.class);
 
-        admin = new Admin(1, 3, 1, 300, game.assetManager.get("badlogic.jpg", Texture.class));
+        AnimationSet animations = AnimationSetFactory.load(game.assetManager, "playerModel.json");
+        admin = new Admin(1, 3, 1, 300, animations);
         float posx = Gdx.graphics.getWidth()/2 - admin.getWidth()/2;
         float posy = Gdx.graphics.getHeight()/2 - admin.getHeight()/2;
         admin.setPosition(posx, posy);

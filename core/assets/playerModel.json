@@ -1,0 +1,7 @@
+{
+  "frameDuration": 0.1,
+  "down": ["frontBase.png", "frontLeft.png", "frontRight.png"],
+  "up": ["backBase.png"],
+  "right": ["sideBase.png", "sideLeft.png", "sideRight.png"],
+  "left": ["sideBase.png", "sideLeft.png", "sideRight.png"]
+}

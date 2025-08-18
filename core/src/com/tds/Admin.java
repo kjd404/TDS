@@ -8,11 +8,14 @@ package com.tds;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.tds.input.InputHandler;
 import com.tds.input.InputHandler.Action;
+import com.tds.assets.AnimationSet;
 import java.util.ArrayList;
 
 /**
@@ -22,37 +25,29 @@ import java.util.ArrayList;
 public class Admin extends Entity{   
     int lives;
     ParticleSystem bullets;
-    float aTimer = 0;
-    int frame = 0;
+    float stateTime = 0;
     float oldX, oldY;
-    
-    ArrayList<Texture> textures = new ArrayList<Texture>();
 
-    public Admin(float strength, int lives, float health, float speed, 
-            Texture texture) {
-        super(health, speed, texture, 0, 0, 256, 256);
-        
+    private final AnimationSet animations;
+
+    public Admin(float strength, int lives, float health, float speed,
+            AnimationSet animations) {
+        super(health, speed,
+                animations.getDown().getKeyFrame(0).getTexture(),
+                animations.getDown().getKeyFrame(0).getRegionX(),
+                animations.getDown().getKeyFrame(0).getRegionY(),
+                animations.getDown().getKeyFrame(0).getRegionWidth(),
+                animations.getDown().getKeyFrame(0).getRegionHeight());
+
+        setRegion(animations.getDown().getKeyFrame(0));
         setScale(0.25f);
-        
+
         this.lives = lives;
+        this.animations = animations;
         bullets = new ParticleSystem(new Texture("Bullet.png"));
-        textures.add(new Texture("frontBase.png"));
-        textures.add(new Texture("frontLeft.png"));
-        textures.add(new Texture("frontRight.png"));
-        textures.add(new Texture("sideBase.png"));
-        textures.add(new Texture("sideLeft.png"));
-        textures.add(new Texture("sideRight.png"));
-        textures.add(new Texture("backBase.png"));
-        
-        setTexture(textures.get(0));
     }
 
     
-    public Admin(float strength, int lives, float health, float speed) {
-        super(health, speed);
-        this.lives = lives;
-    }
-
     public int getLives() {
         return lives;
     }
@@ -94,33 +89,31 @@ public class Admin extends Entity{
             bullets.shoot(4, 0.1f, (float)Math.toDegrees(angle), getX() + 100, getY() + 100, 20);
                 
         this.boundingCircle.setPosition(this.getX(), this.getY());
-        
+
         if(keyPressed) {
-            aTimer += Gdx.graphics.getDeltaTime();
-            if(aTimer > 0.1f) {
-                frame = (frame + 1) % 3;
-                aTimer = 0;
-            }
+            stateTime += Gdx.graphics.getDeltaTime();
+        } else {
+            stateTime = 0;
         }
-        
+
         float range = (float)(Math.PI/4);
+        Animation<TextureRegion> current = animations.getDown();
         if(Math.abs(angle - 0) < range) {
-            setTexture(textures.get(6));
+            current = animations.getUp();
         }
-        if(Math.abs(angle - Math.PI/2) < range) { 
-            setTexture(textures.get(3 + frame));
-            setFlip(true, false);
+        if(Math.abs(angle - Math.PI/2) < range) {
+            current = animations.getLeft();
         }
-        if(Math.abs(angle - Math.PI) < range) { 
-            setTexture(textures.get(0 + frame));
+        if(Math.abs(angle - Math.PI) < range) {
+            current = animations.getDown();
         }
-        if(Math.abs(angle + Math.PI / 2) < range) { 
-            setTexture(textures.get(3 + frame));
-            setFlip(false, false);
+        if(Math.abs(angle + Math.PI / 2) < range) {
+            current = animations.getRight();
         }
-        
-        //setRotation((float)Math.toDegrees(angle));
-        
+
+        TextureRegion region = current.getKeyFrame(stateTime, true);
+        setRegion(region);
+
         bullets.process(enemies);
     }
     
