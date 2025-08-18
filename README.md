@@ -34,6 +34,8 @@ Game code that needs frame timing or screen dimensions should depend on the `Gra
 
 Textures should be loaded through LibGDX's `AssetManager` instead of instantiating `Texture` directly. Projectile and bullet logic is implemented via the `ParticleSystem` interface, with instances created through `ParticleSystemFactory`.
 
+Screens are constructed through `ScreenFactory` (used by `MenuScreen`) to decouple creation from usage.
+
 ## macOS notes
 - Ensure the Gradle wrapper is executable:
 

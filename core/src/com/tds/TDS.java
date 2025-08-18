@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tds.score.GdxPreferencesScoreRepository;
 import com.tds.score.ScoreRepository;
 import com.tds.screen.MenuScreen;
+import com.tds.screen.ScreenFactory;
+import com.tds.screen.DefaultScreenFactory;
 import com.tds.input.InputService;
 import com.tds.input.InputHandler;
 
@@ -45,7 +47,8 @@ public class TDS extends Game {
 
         // Retrieve any persisted high score on startup
         highScore = scoreRepository.getHighScore();
-        setScreen(new MenuScreen(this, inputService));
+        ScreenFactory factory = new DefaultScreenFactory(this, inputService);
+        setScreen(new MenuScreen(this, inputService, factory));
     }
 
     @Override

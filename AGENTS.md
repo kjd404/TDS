@@ -36,3 +36,4 @@ This project contains unit tests. Run them with:
 - Tests that require graphics timing or sizing should prefer `FakeGraphicsContext` from the `core/test` package.
 - Load textures via the shared `AssetManager` instead of constructing `Texture` directly.
 - Projectile or bullet effects should use the `ParticleSystem` interface. Create instances through `ParticleSystemFactory`.
+- Screens should be obtained from `ScreenFactory` rather than instantiated directly.

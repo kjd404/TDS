@@ -11,11 +11,13 @@ import com.tds.input.InputService;
 public class MenuScreen extends ScreenAdapter {
     private final TDS game;
     private final InputService input;
+    private final ScreenFactory screenFactory;
     private BitmapFont font;
 
-    public MenuScreen(TDS game, InputService input) {
+    public MenuScreen(TDS game, InputService input, ScreenFactory screenFactory) {
         this.game = game;
         this.input = input;
+        this.screenFactory = screenFactory;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class MenuScreen extends ScreenAdapter {
         game.batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            game.setScreen(new GameScreen(game, input));
+            game.setScreen(screenFactory.createGameScreen());
         }
     }
 
