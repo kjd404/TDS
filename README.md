@@ -2,10 +2,10 @@
 
 ## Prerequisites
 - JDK 17 or newer
-- Gradle wrapper scripts target Gradle 8.5. If `gradle/wrapper/gradle-wrapper.jar` is missing, generate it with:
+- Gradle wrapper scripts target Gradle 8.9. If `gradle/wrapper/gradle-wrapper.jar` is missing, generate it with:
 
 ```bash
-gradle wrapper --gradle-version 8.5
+gradle wrapper --gradle-version 8.9
 ```
 
 Verify with:
