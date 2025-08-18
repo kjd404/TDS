@@ -4,42 +4,44 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tds.score.GdxPreferencesScoreRepository;
-import com.tds.score.ScoreRepository;
-import com.tds.screen.MenuScreen;
-import com.tds.screen.ScreenFactory;
-import com.tds.screen.DefaultScreenFactory;
 import com.tds.input.InputService;
-import com.tds.input.InputHandler;
+import com.tds.score.ScoreRepository;
+import com.tds.screen.DefaultScreenFactory;
+import com.tds.screen.MenuScreen;
+import com.tds.screen.RenderStrategy;
+import com.tds.screen.ScreenFactory;
 
+import java.util.function.Supplier;
+
+/**
+ * Main LibGDX game class wired via dependency injection.
+ */
 public class TDS extends Game {
     public SpriteBatch batch;
-    public AssetManager assetManager;
+    public final AssetManager assetManager;
     private int highScore;
     private final ScoreRepository scoreRepository;
     private final InputService inputService;
+    private final RenderStrategy renderStrategy;
+    private final Supplier<SpriteBatch> batchSupplier;
 
-    public TDS() {
-        this(new InputHandler(), new GdxPreferencesScoreRepository());
-    }
-
-    public TDS(ScoreRepository scoreRepository) {
-        this(new InputHandler(), scoreRepository);
-    }
-
-    public TDS(InputService inputService) {
-        this(inputService, new GdxPreferencesScoreRepository());
-    }
-
-    public TDS(InputService inputService, ScoreRepository scoreRepository) {
-        this.scoreRepository = scoreRepository;
+    public TDS(
+            Supplier<SpriteBatch> batchSupplier,
+            AssetManager assetManager,
+            InputService inputService,
+            ScoreRepository scoreRepository,
+            RenderStrategy renderStrategy
+    ) {
+        this.batchSupplier = batchSupplier;
+        this.assetManager = assetManager;
         this.inputService = inputService;
+        this.scoreRepository = scoreRepository;
+        this.renderStrategy = renderStrategy;
     }
 
     @Override
-    public void create () {
-        batch = new SpriteBatch();
-        assetManager = new AssetManager();
+    public void create() {
+        batch = batchSupplier.get();
         assetManager.load("background.png", Texture.class);
         assetManager.load("virus.png", Texture.class);
         assetManager.load("Bullet.png", Texture.class);
@@ -47,19 +49,33 @@ public class TDS extends Game {
 
         // Retrieve any persisted high score on startup
         highScore = scoreRepository.getHighScore();
-        ScreenFactory factory = new DefaultScreenFactory(this, inputService);
+        ScreenFactory factory = new DefaultScreenFactory(this, inputService, renderStrategy);
         setScreen(new MenuScreen(this, inputService, factory));
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        batch.dispose();
+        if (batch != null) {
+            batch.dispose();
+        }
         assetManager.dispose();
     }
 
     public int getHighScore() {
         return highScore;
+    }
+
+    public InputService getInputService() {
+        return inputService;
+    }
+
+    public ScoreRepository getScoreRepository() {
+        return scoreRepository;
+    }
+
+    public RenderStrategy getRenderStrategy() {
+        return renderStrategy;
     }
 
     /**
@@ -80,3 +96,4 @@ public class TDS extends Game {
         highScore = 0;
     }
 }
+

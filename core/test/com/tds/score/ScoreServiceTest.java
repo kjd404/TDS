@@ -1,6 +1,12 @@
 package com.tds.score;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tds.TDS;
+import com.tds.GameBootstrap;
+import com.tds.input.InputService;
+import com.tds.screen.RenderStrategy;
+import static org.mockito.Mockito.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -34,7 +40,13 @@ public class ScoreServiceTest {
 
     @Test
     public void submitScoreUpdatesHighScore() {
-        TDS game = new TDS(new InMemoryScoreRepository());
+        TDS game = new GameBootstrap()
+                .withScoreRepository(new InMemoryScoreRepository())
+                .withAssetManager(mock(AssetManager.class))
+                .withSpriteBatch(mock(SpriteBatch.class))
+                .withInputService(mock(InputService.class))
+                .withRenderStrategy(mock(RenderStrategy.class))
+                .bootstrap();
         game.submitScore(10);
         assertEquals(10, game.getHighScore());
 
@@ -45,7 +57,13 @@ public class ScoreServiceTest {
 
     @Test
     public void resetHighScoreClearsStoredValue() {
-        TDS game = new TDS(new InMemoryScoreRepository());
+        TDS game = new GameBootstrap()
+                .withScoreRepository(new InMemoryScoreRepository())
+                .withAssetManager(mock(AssetManager.class))
+                .withSpriteBatch(mock(SpriteBatch.class))
+                .withInputService(mock(InputService.class))
+                .withRenderStrategy(mock(RenderStrategy.class))
+                .bootstrap();
         game.submitScore(42);
         game.resetHighScore();
         assertEquals(0, game.getHighScore());

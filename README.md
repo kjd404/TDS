@@ -36,6 +36,8 @@ Textures should be loaded through LibGDX's `AssetManager` instead of instantiati
 
 Screens are constructed through `ScreenFactory` (used by `MenuScreen`) to decouple creation from usage.
 
+Application startup uses `GameBootstrap` to assemble core services such as `AssetManager`, `InputService`, `ScoreRepository`, and rendering strategy, enabling dependency injection and headless testing.
+
 ## macOS notes
 - Ensure the Gradle wrapper is executable:
 

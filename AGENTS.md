@@ -37,3 +37,7 @@ This project contains unit tests. Run them with:
 - Load textures via the shared `AssetManager` instead of constructing `Texture` directly.
 - Projectile or bullet effects should use the `ParticleSystem` interface. Create instances through `ParticleSystemFactory`.
 - Screens should be obtained from `ScreenFactory` rather than instantiated directly.
+
+## Object-Oriented Design
+- Prefer dependency injection and object composition as described in *Dependency Injection: Principles, Practices, and Patterns* by Mark Seemann and Steven van Deursen.
+- Follow the guidelines in Yegor Bugayenko's *Elegant Objects* for small, cohesive classes and constructor-based immutability.

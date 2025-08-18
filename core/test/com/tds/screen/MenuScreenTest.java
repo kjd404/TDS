@@ -11,6 +11,10 @@ import com.badlogic.gdx.backends.headless.mock.input.MockInput;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.assets.AssetManager;
+import com.tds.screen.RenderStrategy;
+import com.tds.screen.OrthographicRenderStrategy;
+import static org.mockito.Mockito.*;
 import com.tds.TDS;
 import com.tds.input.InputHandler;
 import com.tds.input.InputService;
@@ -31,7 +35,9 @@ public class MenuScreenTest {
 
     private static class StubGame extends TDS {
         Screen lastScreen;
-        StubGame(InputService input, ScoreRepository repo) { super(input, repo); }
+        StubGame(InputService input, ScoreRepository repo) {
+            super(() -> mock(SpriteBatch.class), mock(AssetManager.class), input, repo, mock(RenderStrategy.class));
+        }
         @Override public void setScreen(Screen screen) { lastScreen = screen; }
     }
 
@@ -47,7 +53,7 @@ public class MenuScreenTest {
         @Override
         public GameScreen createGameScreen() {
             called = true;
-            produced = new GameScreen(game, input);
+            produced = new GameScreen(game, input, new OrthographicRenderStrategy(800, 600));
             return produced;
         }
     }
