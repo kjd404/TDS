@@ -43,15 +43,12 @@ public class GameScreen extends ScreenAdapter {
     private final InputService input;
     private final GraphicsContext graphics;
 
-    public GameScreen(TDS game, InputService input) {
+    public GameScreen(TDS game, InputService input, RenderStrategy renderStrategy) {
         this.game = game;
         this.input = input;
+        this.renderStrategy = renderStrategy;
 
         this.graphics = new GdxGraphicsContext();
-        float worldWidth = graphics.getWidth();
-        float worldHeight = graphics.getHeight();
-
-        renderStrategy = new OrthographicRenderStrategy(worldWidth, worldHeight);
         camera = (OrthographicCamera) renderStrategy.getCamera();
         viewport = renderStrategy.getViewport();
     }
