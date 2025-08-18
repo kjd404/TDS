@@ -5,10 +5,10 @@
  */
 package com.tds;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
+import com.tds.platform.GraphicsContext;
 
 /**
  *
@@ -19,9 +19,11 @@ public class ParticleSystem {
     float rateTimer = 0;
     Texture texture;
     ArrayList<Entity> particles = new ArrayList<Entity>();
-    
-    public ParticleSystem(Texture pTex) {
+    private final GraphicsContext graphics;
+
+    public ParticleSystem(Texture pTex, GraphicsContext graphics) {
         texture = pTex;
+        this.graphics = graphics;
     }
     
     void shoot(float secondsOfLife, float fireRate, float angle, float x, float y, float speed) {
@@ -39,7 +41,7 @@ public class ParticleSystem {
     }
     
     void process(ArrayList<Virus> enemies) {
-        float time = Gdx.graphics.getDeltaTime();
+        float time = graphics.getDeltaTime();
         rateTimer += time;
         for(int i = particles.size() - 1; i >= 0; i--) {
             particles.get(i).translate(particles.get(i).vx, particles.get(i).vy);

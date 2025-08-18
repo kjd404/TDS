@@ -17,6 +17,8 @@ import com.tds.TDS;
 import com.tds.Virus;
 import com.tds.Wall;
 import com.tds.input.InputService;
+import com.tds.platform.GraphicsContext;
+import com.tds.platform.GdxGraphicsContext;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -37,13 +39,15 @@ public class GameScreen extends ScreenAdapter {
     private final Viewport viewport;
     private final RenderStrategy renderStrategy;
     private final InputService input;
+    private final GraphicsContext graphics;
 
     public GameScreen(TDS game, InputService input) {
         this.game = game;
         this.input = input;
 
-        float worldWidth = Gdx.graphics.getWidth();
-        float worldHeight = Gdx.graphics.getHeight();
+        this.graphics = new GdxGraphicsContext();
+        float worldWidth = graphics.getWidth();
+        float worldHeight = graphics.getHeight();
 
         renderStrategy = new OrthographicRenderStrategy(worldWidth, worldHeight);
         camera = (OrthographicCamera) renderStrategy.getCamera();
@@ -52,13 +56,13 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        hud = new HUD();
+        hud = new HUD(graphics);
         hud.setHighScore(game.getHighScore());
         background = game.assetManager.get("background.png", Texture.class);
         virusTexture = game.assetManager.get("virus.png", Texture.class);
 
         AnimationSet animations = AnimationSetFactory.load(game.assetManager, "playerModel.json");
-        admin = new Admin(1, 3, 1, 300, animations, input);
+        admin = new Admin(1, 3, 1, 300, animations, input, graphics);
         float posx = viewport.getWorldWidth()/2 - admin.getWidth()/2;
         float posy = viewport.getWorldHeight()/2 - admin.getHeight()/2;
         admin.setPosition(posx, posy);
@@ -162,7 +166,7 @@ public class GameScreen extends ScreenAdapter {
     void generateLevel(int levelNumber){
         int numberVirus = levelNumber*2 + levelNumber;
         for(int i = 0; i < numberVirus; i++) {
-            v1 = new Virus(virusTexture, levelNumber);
+            v1 = new Virus(virusTexture, levelNumber, graphics);
             virusList.add(v1);
         }
         Random rand = new Random();

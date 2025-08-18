@@ -29,6 +29,9 @@ Verify with:
 ./gradlew desktop:run
 ```
 
+## Development
+Game code that needs frame timing or screen dimensions should depend on the `GraphicsContext` interface rather than accessing `Gdx.graphics` directly. The `core` module provides a `GdxGraphicsContext` implementation and tests can use `FakeGraphicsContext` to control values.
+
 ## macOS notes
 - Ensure the Gradle wrapper is executable:
 

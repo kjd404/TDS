@@ -5,9 +5,9 @@
  */
 package com.tds;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.tds.platform.GraphicsContext;
 
 /**
  *
@@ -22,11 +22,13 @@ public class HUD {
     private final String score = "Score: ";
     private final String lives = "Lives: ";
     private final String highScoreLabel = "High Score: ";
+    private final GraphicsContext graphics;
     
     /**
      * @author KeisterBun
      */
-    public HUD() {
+    public HUD(GraphicsContext graphics) {
+        this.graphics = graphics;
         totalScore = 0;
         currentLevel = 1;
     }
@@ -61,9 +63,9 @@ public class HUD {
         totalScore = newTotal;
     }
     
-    public void gameOver(SpriteBatch batch, BitmapFont pen) {
-        pen.draw(batch, "GAME OVER", Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/2);
-        
+    public void gameOver(Batch batch, BitmapFont pen) {
+        pen.draw(batch, "GAME OVER", graphics.getHeight()/2f, graphics.getWidth()/2f);
+
     }
     
     /**
@@ -71,11 +73,11 @@ public class HUD {
      * @param batch
      * @param pen 
      */
-    public void drawHud(SpriteBatch batch, BitmapFont pen) {
-        pen.draw(batch, score.concat(Integer.toString(totalScore)), 20, Gdx.graphics.getHeight()-20);
-        pen.draw(batch, level.concat(Integer.toString(currentLevel)), 20, Gdx.graphics.getHeight()-40);
-        pen.draw(batch, lives.concat(Integer.toString(currentLives)), 20, Gdx.graphics.getHeight()-60);
-        pen.draw(batch, highScoreLabel.concat(Integer.toString(highScore)), 20, Gdx.graphics.getHeight()-80);
+    public void drawHud(Batch batch, BitmapFont pen) {
+        pen.draw(batch, score.concat(Integer.toString(totalScore)), 20, graphics.getHeight()-20);
+        pen.draw(batch, level.concat(Integer.toString(currentLevel)), 20, graphics.getHeight()-40);
+        pen.draw(batch, lives.concat(Integer.toString(currentLives)), 20, graphics.getHeight()-60);
+        pen.draw(batch, highScoreLabel.concat(Integer.toString(highScore)), 20, graphics.getHeight()-80);
     }
 
     public int getCurrentLives() {
