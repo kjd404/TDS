@@ -125,8 +125,12 @@ public class Admin extends Entity{
     void draw(SpriteBatch batch) {
         super.draw(batch);
     }
-    
-    void wallCollison(Wall wall){
+
+    public void drawBullets(SpriteBatch batch) {
+        bullets.draw(batch);
+    }
+
+    public void wallCollison(Wall wall){
         Rectangle r1 = wall.getBoundingRectangle();
         Rectangle r2 = this.getBoundingRectangle();
         
