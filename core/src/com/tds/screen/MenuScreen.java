@@ -6,13 +6,16 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.tds.TDS;
+import com.tds.input.InputService;
 
 public class MenuScreen extends ScreenAdapter {
     private final TDS game;
+    private final InputService input;
     private BitmapFont font;
 
-    public MenuScreen(TDS game) {
+    public MenuScreen(TDS game, InputService input) {
         this.game = game;
+        this.input = input;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class MenuScreen extends ScreenAdapter {
         game.batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new GameScreen(game, input));
         }
     }
 

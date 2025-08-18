@@ -7,19 +7,31 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tds.score.GdxPreferencesScoreRepository;
 import com.tds.score.ScoreRepository;
 import com.tds.screen.MenuScreen;
+import com.tds.input.InputService;
+import com.tds.input.InputHandler;
 
 public class TDS extends Game {
     public SpriteBatch batch;
     public AssetManager assetManager;
     private int highScore;
     private final ScoreRepository scoreRepository;
+    private final InputService inputService;
 
     public TDS() {
-        this(new GdxPreferencesScoreRepository());
+        this(new InputHandler(), new GdxPreferencesScoreRepository());
     }
 
     public TDS(ScoreRepository scoreRepository) {
+        this(new InputHandler(), scoreRepository);
+    }
+
+    public TDS(InputService inputService) {
+        this(inputService, new GdxPreferencesScoreRepository());
+    }
+
+    public TDS(InputService inputService, ScoreRepository scoreRepository) {
         this.scoreRepository = scoreRepository;
+        this.inputService = inputService;
     }
 
     @Override
@@ -32,7 +44,7 @@ public class TDS extends Game {
 
         // Retrieve any persisted high score on startup
         highScore = scoreRepository.getHighScore();
-        setScreen(new MenuScreen(this));
+        setScreen(new MenuScreen(this, inputService));
     }
 
     @Override

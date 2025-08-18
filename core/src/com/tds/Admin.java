@@ -15,8 +15,8 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.tds.input.InputHandler;
-import com.tds.input.InputHandler.Action;
+import com.tds.input.InputService;
+import com.tds.input.InputService.Action;
 import com.tds.assets.AnimationSet;
 import java.util.ArrayList;
 
@@ -31,9 +31,15 @@ public class Admin extends Entity{
     float oldX, oldY;
 
     private final AnimationSet animations;
+    private final InputService input;
 
     public Admin(float strength, int lives, float health, float speed,
-            AnimationSet animations) {
+            AnimationSet animations, InputService input) {
+        this(strength, lives, health, speed, animations, input, new Texture("Bullet.png"));
+    }
+
+    public Admin(float strength, int lives, float health, float speed,
+            AnimationSet animations, InputService input, Texture bulletTexture) {
         super(health, speed,
                 animations.getDown().getKeyFrame(0).getTexture(),
                 animations.getDown().getKeyFrame(0).getRegionX(),
@@ -46,7 +52,8 @@ public class Admin extends Entity{
 
         this.lives = lives;
         this.animations = animations;
-        bullets = new ParticleSystem(new Texture("Bullet.png"));
+        bullets = new ParticleSystem(bulletTexture);
+        this.input = input;
     }
 
     
@@ -66,7 +73,6 @@ public class Admin extends Entity{
         float mouseX = mouseWorld.x;
         float mouseY = mouseWorld.y;
 
-        InputHandler input = InputHandler.getInstance();
         boolean keyPressed = false;
         if(input.isActionPressed(Action.MOVE_LEFT)){
             keyPressed = true;
