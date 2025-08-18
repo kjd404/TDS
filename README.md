@@ -34,6 +34,7 @@ This project uses [pre-commit](https://pre-commit.com/) with
 [Spotless](https://github.com/diffplug/spotless) to automatically format Java
 sources.
 
+
 Install pre-commit (once per machine):
 
 ```bash
