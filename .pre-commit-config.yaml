@@ -1,0 +1,6 @@
+repos:
+  - repo: https://github.com/pre-commit/mirrors-google-java-format
+    rev: v1.17.0
+    hooks:
+      - id: google-java-format
+        files: \.java$
