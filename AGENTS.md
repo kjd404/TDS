@@ -3,7 +3,13 @@
 This repository is a small LibGDX project split into `core` and `desktop` modules.
 
 ## Building
-Use the provided Gradle wrapper:
+The Gradle wrapper JAR is not committed. If `gradle/wrapper/gradle-wrapper.jar` is missing, generate it with:
+
+```
+gradle wrapper --gradle-version 8.5
+```
+
+Then use the wrapper:
 
 ```
 ./gradlew build

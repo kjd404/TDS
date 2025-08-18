@@ -49,4 +49,6 @@ build/
 
 ## OS Specific
 .DS_Store
+
+# Generated Gradle wrapper JAR
 gradle/wrapper/gradle-wrapper.jar

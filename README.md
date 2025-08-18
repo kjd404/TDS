@@ -2,7 +2,13 @@
 
 ## Prerequisites
 - JDK 17 or newer
-- This project ships with a Gradle wrapper (version 8.5). Verify with:
+- Gradle wrapper scripts target Gradle 8.5. If `gradle/wrapper/gradle-wrapper.jar` is missing, generate it with:
+
+```bash
+gradle wrapper --gradle-version 8.5
+```
+
+Verify with:
 
 ```bash
 ./gradlew --version
