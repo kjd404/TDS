@@ -42,7 +42,7 @@ public class Admin extends Entity{
                 animations.getDown().getKeyFrame(0).getRegionHeight());
 
         setRegion(animations.getDown().getKeyFrame(0));
-        setScale(0.25f);
+        setScale(1f);
 
         this.lives = lives;
         this.animations = animations;

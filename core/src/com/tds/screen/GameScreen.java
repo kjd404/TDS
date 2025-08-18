@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameScreen extends ScreenAdapter {
-    private static final float WORLD_WIDTH = 800f;
-    private static final float WORLD_HEIGHT = 480f;
-
     private final TDS game;
     private HUD hud;
     private Admin admin;
@@ -42,7 +39,11 @@ public class GameScreen extends ScreenAdapter {
 
     public GameScreen(TDS game) {
         this.game = game;
-        renderStrategy = new OrthographicRenderStrategy(WORLD_WIDTH, WORLD_HEIGHT);
+
+        float worldWidth = Gdx.graphics.getWidth();
+        float worldHeight = Gdx.graphics.getHeight();
+
+        renderStrategy = new OrthographicRenderStrategy(worldWidth, worldHeight);
         camera = (OrthographicCamera) renderStrategy.getCamera();
         viewport = renderStrategy.getViewport();
     }
@@ -59,7 +60,6 @@ public class GameScreen extends ScreenAdapter {
         float posx = viewport.getWorldWidth()/2 - admin.getWidth()/2;
         float posy = viewport.getWorldHeight()/2 - admin.getHeight()/2;
         admin.setPosition(posx, posy);
-        admin.scale(.2f);
 
         virusList = new ArrayList<Virus>();
         level = 1;
