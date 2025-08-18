@@ -7,11 +7,12 @@
 package com.tds;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
+import com.tds.input.InputHandler;
+import com.tds.input.InputHandler.Action;
 import java.util.ArrayList;
 
 /**
@@ -66,29 +67,30 @@ public class Admin extends Entity{
         this.setOriginCenter();
         float mouseX = Gdx.input.getX();
         float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        
+
+        InputHandler input = InputHandler.getInstance();
         boolean keyPressed = false;
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+        if(input.isActionPressed(Action.MOVE_LEFT)){
             keyPressed = true;
             this.setX(this.getX() - Gdx.graphics.getDeltaTime() * getSpeed());
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if(input.isActionPressed(Action.MOVE_RIGHT)) {
             keyPressed = true;
             this.setX(this.getX() + Gdx.graphics.getDeltaTime() * getSpeed());
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if(input.isActionPressed(Action.MOVE_UP)) {
             keyPressed = true;
             this.setY(this.getY() + Gdx.graphics.getDeltaTime() * getSpeed());
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+        if(input.isActionPressed(Action.MOVE_DOWN)) {
             keyPressed = true;
             this.setY(this.getY() - Gdx.graphics.getDeltaTime() * getSpeed());
         }
-        
+
         float dirX =  mouseX - getX() - getWidth()/2;
         float dirY =  mouseY - getY() - getHeight()/2;
         double angle = Math.atan2(-dirX, dirY);
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+        if(input.isActionPressed(Action.FIRE))
             bullets.shoot(4, 0.1f, (float)Math.toDegrees(angle), getX() + 100, getY() + 100, 20);
                 
         this.boundingCircle.setPosition(this.getX(), this.getY());

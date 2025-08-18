@@ -12,6 +12,7 @@ import com.tds.HUD;
 import com.tds.TDS;
 import com.tds.Virus;
 import com.tds.Wall;
+import com.tds.input.InputHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -52,6 +53,9 @@ public class GameScreen extends ScreenAdapter {
         pen.setColor(Color.YELLOW);
 
         walls = new Wall[4];
+
+        // Direct all input events to the centralized input handler
+        Gdx.input.setInputProcessor(InputHandler.getInstance());
         int gap = 200;
         int wallWidth = 50;
         int worldHeight = Gdx.graphics.getHeight();
