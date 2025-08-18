@@ -17,9 +17,11 @@ public class HUD {
     private int totalScore;
     private int currentLevel;
     private int currentLives;
+    private int highScore;
     private final String level = "Level: ";
     private final String score = "Score: ";
     private final String lives = "Lives: ";
+    private final String highScoreLabel = "High Score: ";
     
     /**
      * @author KeisterBun
@@ -73,6 +75,7 @@ public class HUD {
         pen.draw(batch, score.concat(Integer.toString(totalScore)), 20, Gdx.graphics.getHeight()-20);
         pen.draw(batch, level.concat(Integer.toString(currentLevel)), 20, Gdx.graphics.getHeight()-40);
         pen.draw(batch, lives.concat(Integer.toString(currentLives)), 20, Gdx.graphics.getHeight()-60);
+        pen.draw(batch, highScoreLabel.concat(Integer.toString(highScore)), 20, Gdx.graphics.getHeight()-80);
     }
 
     public int getCurrentLives() {
@@ -81,6 +84,14 @@ public class HUD {
 
     public void setCurrentLives(int currentLives) {
         this.currentLives = currentLives;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
     }
     
 }
