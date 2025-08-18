@@ -36,6 +36,7 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         hud = new HUD();
+        hud.setHighScore(game.getHighScore());
         background = game.assetManager.get("background.png", Texture.class);
         virusTexture = game.assetManager.get("virus.png", Texture.class);
 
@@ -127,6 +128,8 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if(virusList.size() == 0){
+            game.submitScore(hud.getTotalScore());
+            hud.setHighScore(game.getHighScore());
             level += 1;
             hud.incrementCurrentLevel();
             generateLevel(level);
