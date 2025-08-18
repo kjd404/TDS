@@ -15,7 +15,6 @@ public class TDS extends Game {
     public void create () {
         batch = new SpriteBatch();
         assetManager = new AssetManager();
-        assetManager.load("badlogic.jpg", Texture.class);
         assetManager.load("background.png", Texture.class);
         assetManager.load("virus.png", Texture.class);
         assetManager.finishLoading();
