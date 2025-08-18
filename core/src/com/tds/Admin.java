@@ -7,7 +7,6 @@
 package com.tds;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,6 +19,7 @@ import com.tds.input.InputService.Action;
 import com.tds.assets.AnimationSet;
 import com.tds.platform.GraphicsContext;
 import java.util.ArrayList;
+import com.tds.weapons.ParticleSystem;
 
 /**
  *
@@ -37,12 +37,7 @@ public class Admin extends Entity{
     private final InputService input;
 
     public Admin(float strength, int lives, float health, float speed,
-            AnimationSet animations, InputService input, GraphicsContext graphics) {
-        this(strength, lives, health, speed, animations, input, new Texture("Bullet.png"), graphics);
-    }
-
-    public Admin(float strength, int lives, float health, float speed,
-            AnimationSet animations, InputService input, Texture bulletTexture, GraphicsContext graphics) {
+            AnimationSet animations, InputService input, ParticleSystem bullets, GraphicsContext graphics) {
         super(health, speed,
                 animations.getDown().getKeyFrame(0).getTexture(),
                 animations.getDown().getKeyFrame(0).getRegionX(),
@@ -55,7 +50,7 @@ public class Admin extends Entity{
 
         this.lives = lives;
         this.animations = animations;
-        bullets = new ParticleSystem(bulletTexture, graphics);
+        this.bullets = bullets;
         this.input = input;
         this.graphics = graphics;
     }
