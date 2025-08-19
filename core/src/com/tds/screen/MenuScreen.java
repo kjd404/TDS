@@ -1,12 +1,12 @@
 package com.tds.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.tds.TDS;
 import com.tds.input.InputService;
+import com.tds.input.InputService.Action;
 
 public class MenuScreen extends ScreenAdapter {
     private final TDS game;
@@ -34,7 +34,7 @@ public class MenuScreen extends ScreenAdapter {
         font.draw(game.batch, "Press ENTER to Start", 100, 100);
         game.batch.end();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+        if (input.isActionPressed(Action.START)) {
             game.setScreen(screenFactory.createGameScreen());
         }
     }

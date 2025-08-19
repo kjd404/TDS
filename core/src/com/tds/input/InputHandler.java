@@ -24,6 +24,8 @@ public class InputHandler extends InputAdapter implements InputService {
         bindings.put(Action.MOVE_DOWN, Input.Keys.S);
         bindings.put(Action.DASH, Input.Keys.SHIFT_LEFT);
         bindings.put(Action.FIRE, Input.Buttons.LEFT);
+        bindings.put(Action.START, Input.Keys.ENTER);
+        bindings.put(Action.QUIT, Input.Keys.ESCAPE);
 
         for (Action action : Action.values()) {
             states.put(action, false);
