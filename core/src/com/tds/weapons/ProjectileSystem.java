@@ -61,18 +61,14 @@ public class ProjectileSystem implements ParticleSystem {
                 particles.remove(i);
                 continue;
             }
-            try {
-                for (Virus e : enemies) {
-                    if (e.getBoundingRectangle().overlaps(p.getBoundingRectangle())) {
-                        e.setHealth(e.getHealth() - 1);
-                        if (e.getHealth() <= 0) {
-                            e.setStatus(false);
-                        }
-                        p.setHealth(0);
+            for (Virus e : enemies) {
+                if (e.getBoundingRectangle().overlaps(p.getBoundingRectangle())) {
+                    e.setHealth(e.getHealth() - 1);
+                    if (e.getHealth() <= 0) {
+                        e.setStatus(false);
                     }
+                    p.setHealth(0);
                 }
-            } catch (Exception t) {
-
             }
         }
     }
