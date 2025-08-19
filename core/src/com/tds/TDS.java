@@ -43,6 +43,7 @@ public class TDS extends Game {
         assetManager.load("background.png", Texture.class);
         assetManager.load("virus.png", Texture.class);
         assetManager.load("Bullet.png", Texture.class);
+        assetManager.load("brick.jpg", Texture.class);
         assetManager.finishLoading();
 
         // Retrieve any persisted high score on startup
