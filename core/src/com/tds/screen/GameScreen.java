@@ -118,7 +118,7 @@ public class GameScreen extends ScreenAdapter {
 
         renderStrategy.apply(game.batch);
         game.batch.begin();
-        game.batch.draw(background, 0, 0);
+        game.batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         for (Virus v : virusList) {
             v.move(admin.getX() + admin.getWidth() / 2, admin.getY() + admin.getHeight() / 2);
             if (admin.getBoundingRectangle().overlaps(v.getBoundingRectangle())) {
