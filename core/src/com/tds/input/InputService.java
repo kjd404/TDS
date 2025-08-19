@@ -14,7 +14,9 @@ public interface InputService extends InputProcessor {
         MOVE_UP,
         MOVE_DOWN,
         DASH,
-        FIRE
+        FIRE,
+        START,
+        QUIT
     }
 
     /**

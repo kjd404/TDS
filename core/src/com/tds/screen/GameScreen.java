@@ -1,7 +1,6 @@
 package com.tds.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,6 +16,7 @@ import com.tds.Wall;
 import com.tds.assets.AnimationSet;
 import com.tds.assets.AnimationSetFactory;
 import com.tds.input.InputService;
+import com.tds.input.InputService.Action;
 import com.tds.platform.GdxGraphicsContext;
 import com.tds.platform.GraphicsContext;
 import com.tds.weapons.ParticleSystem;
@@ -111,7 +111,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(.1f, .1f, .1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (input.isActionPressed(Action.QUIT)) {
             Gdx.app.exit();
         }
 

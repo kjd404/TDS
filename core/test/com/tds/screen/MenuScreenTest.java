@@ -11,13 +11,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
-import com.badlogic.gdx.backends.headless.mock.input.MockInput;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tds.TDS;
 import com.tds.input.InputHandler;
 import com.tds.input.InputService;
+import com.tds.input.InputService.Action;
 import com.tds.score.ScoreRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,13 +72,6 @@ public class MenuScreenTest {
             called = true;
             produced = new GameScreen(game, input, new OrthographicRenderStrategy(800, 600));
             return produced;
-        }
-    }
-
-    private static class TestInput extends MockInput {
-        @Override
-        public boolean isKeyJustPressed(int keycode) {
-            return keycode == Input.Keys.ENTER;
         }
     }
 
@@ -158,16 +151,18 @@ public class MenuScreenTest {
     private static class TestableMenuScreen extends MenuScreen {
         private final TDS g;
         private final ScreenFactory f;
+        private final InputService i;
 
         TestableMenuScreen(TDS g, InputService i, ScreenFactory f) {
             super(g, i, f);
             this.g = g;
+            this.i = i;
             this.f = f;
         }
 
         @Override
         public void render(float delta) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            if (i.isActionPressed(Action.START)) {
                 g.setScreen(f.createGameScreen());
             }
         }
@@ -175,12 +170,12 @@ public class MenuScreenTest {
 
     @Test
     public void pressingEnterRequestsNewScreen() {
-        InputService inputService = new InputHandler();
+        InputHandler inputService = new InputHandler();
         StubGame game = new StubGame(inputService, new StubScoreRepository());
         FakeFactory factory = new FakeFactory(game, inputService);
         MenuScreen menu = new TestableMenuScreen(game, inputService, factory);
 
-        Gdx.input = new TestInput();
+        inputService.keyDown(Input.Keys.ENTER);
         menu.render(0f);
 
         assertTrue(factory.called);
