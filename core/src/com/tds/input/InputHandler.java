@@ -1,7 +1,10 @@
 package com.tds.input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -71,6 +74,13 @@ public class InputHandler extends InputAdapter implements InputService {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         handleRelease(button);
         return false;
+    }
+
+    @Override
+    public Vector2 getPointer(Viewport viewport) {
+        Vector2 coords = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+        viewport.unproject(coords);
+        return coords;
     }
 
     private void handlePress(int code) {
