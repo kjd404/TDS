@@ -25,7 +25,8 @@ public class Entity extends Sprite {
 
     public Entity(float health, float speed, Texture texture, int srcX, int srcY, int srcWidth, int srcHeight) {
         super(texture, srcX, srcY, srcWidth, srcHeight);
-        boundingCircle = new Circle(getX(), getY(), srcWidth);
+        setBounds(getX(), getY(), srcWidth, srcHeight);
+        boundingCircle = new Circle(getX(), getY(), srcWidth / 2f);
         this.health = health;
         this.speed = speed;
     }
@@ -34,6 +35,39 @@ public class Entity extends Sprite {
         super();
         this.health = health;
         this.speed = speed;
+        boundingCircle = new Circle(getX(), getY(), getWidth() / 2f);
+    }
+
+    @Override
+    public void setBounds(float x, float y, float width, float height) {
+        super.setBounds(x, y, width, height);
+        if (boundingCircle != null) {
+            boundingCircle.setRadius(getWidth() / 2f);
+        }
+    }
+
+    @Override
+    public void setSize(float width, float height) {
+        super.setSize(width, height);
+        if (boundingCircle != null) {
+            boundingCircle.setRadius(getWidth() / 2f);
+        }
+    }
+
+    @Override
+    public void setScale(float scaleXY) {
+        super.setScale(scaleXY);
+        if (boundingCircle != null) {
+            boundingCircle.setRadius(getWidth() / 2f);
+        }
+    }
+
+    @Override
+    public void setScale(float scaleX, float scaleY) {
+        super.setScale(scaleX, scaleY);
+        if (boundingCircle != null) {
+            boundingCircle.setRadius(getWidth() / 2f);
+        }
     }
 
     public float getHealth() {
