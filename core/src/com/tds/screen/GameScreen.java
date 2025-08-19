@@ -84,19 +84,22 @@ public class GameScreen extends ScreenAdapter {
         int wallWidth = 50;
         float worldHeight = viewport.getWorldHeight();
         float worldWidth = viewport.getWorldWidth();
-        Wall temp = new Wall();
+
+        Texture wallTexture = game.assetManager.get("brick.jpg", Texture.class);
+
+        Wall temp = new Wall(wallTexture);
         temp.setSize(worldWidth - gap, wallWidth);
         temp.setPosition(gap / 2f, 0);
         walls[0] = temp;
-        temp = new Wall();
+        temp = new Wall(wallTexture);
         temp.setSize(worldWidth - gap, wallWidth);
         temp.setPosition(gap / 2f, worldHeight - wallWidth);
         walls[1] = temp;
-        temp = new Wall();
+        temp = new Wall(wallTexture);
         temp.setSize(wallWidth, worldHeight - gap);
         temp.setPosition(0, gap / 2f);
         walls[2] = temp;
-        temp = new Wall();
+        temp = new Wall(wallTexture);
         temp.setSize(wallWidth, worldHeight - gap);
         temp.setPosition(worldWidth - wallWidth, gap / 2f);
         walls[3] = temp;
