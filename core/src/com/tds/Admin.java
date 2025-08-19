@@ -5,12 +5,11 @@
  */
 package com.tds;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tds.assets.AnimationSet;
 import com.tds.input.InputService;
@@ -74,7 +73,7 @@ public class Admin extends Entity {
         oldX = getX();
         oldY = getY();
         this.setOriginCenter();
-        Vector3 mouseWorld = viewport.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        Vector2 mouseWorld = input.getPointer(viewport);
         float mouseX = mouseWorld.x;
         float mouseY = mouseWorld.y;
 

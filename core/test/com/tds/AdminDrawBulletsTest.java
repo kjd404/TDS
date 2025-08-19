@@ -64,6 +64,11 @@ public class AdminDrawBulletsTest {
 
         @Override
         public void bind(InputService.Action action, int code) {}
+
+        @Override
+        public com.badlogic.gdx.math.Vector2 getPointer(com.badlogic.gdx.utils.viewport.Viewport viewport) {
+            return new com.badlogic.gdx.math.Vector2();
+        }
     }
 
     private static class RecordingParticleSystem implements ParticleSystem {
