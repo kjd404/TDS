@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 public class Wall extends Sprite {
 
-    public Wall() {
-        super(new Texture("brick.jpg"));
+    public Wall(Texture texture) {
+        super(texture);
     }
 }
