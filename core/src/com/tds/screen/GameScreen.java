@@ -35,6 +35,7 @@ public class GameScreen extends ScreenAdapter {
     private Wall[] walls;
     private int level;
     private Virus v1;
+    private boolean gameOver;
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
@@ -99,17 +100,28 @@ public class GameScreen extends ScreenAdapter {
         temp.setSize(wallWidth, worldHeight - gap);
         temp.setPosition(worldWidth - wallWidth, gap / 2f);
         walls[3] = temp;
+        gameOver = false;
     }
 
     @Override
     public void render(float delta) {
-        admin.processMovement(virusList, viewport);
         Gdx.gl.glClearColor(.1f, .1f, .1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
+
+        if (gameOver) {
+            renderStrategy.apply(game.batch);
+            game.batch.begin();
+            game.batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+            hud.gameOver(game.batch, pen);
+            game.batch.end();
+            return;
+        }
+
+        admin.processMovement(virusList, viewport);
         hud.setCurrentLives(admin.getLives());
 
         for (Wall wall : walls) {
@@ -126,7 +138,9 @@ public class GameScreen extends ScreenAdapter {
                 admin.setPosition(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2);
                 admin.setLives(admin.getLives() - 1);
                 if (admin.getLives() <= 0) {
-                    Gdx.app.exit();
+                    game.submitScore(hud.getTotalScore());
+                    hud.setHighScore(game.getHighScore());
+                    gameOver = true;
                 }
             }
         }

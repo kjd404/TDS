@@ -64,7 +64,11 @@ public class HUD {
     }
 
     public void gameOver(Batch batch, BitmapFont pen) {
-        pen.draw(batch, "GAME OVER", graphics.getHeight() / 2f, graphics.getWidth() / 2f);
+        float centerX = graphics.getWidth() / 2f;
+        float centerY = graphics.getHeight() / 2f;
+        pen.draw(batch, "GAME OVER", centerX, centerY);
+        pen.draw(batch, score.concat(Integer.toString(totalScore)), centerX, centerY - 20);
+        pen.draw(batch, highScoreLabel.concat(Integer.toString(highScore)), centerX, centerY - 40);
     }
 
     /**
