@@ -23,6 +23,7 @@ public class MenuScreen extends ScreenAdapter {
     @Override
     public void show() {
         font = new BitmapFont();
+        Gdx.input.setInputProcessor(input);
     }
 
     @Override
